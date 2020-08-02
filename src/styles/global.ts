@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import 'react-circular-progressbar/dist/styles.css';
+
 const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
@@ -11,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
   body{
-    background: #333;
+    background: #3B67B7/* 4192D4 */;
   }
   body, input, button {
     text-rendering: optimizeLegibility;
