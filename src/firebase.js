@@ -14,6 +14,21 @@ const config = {
 export const firebaseImpl = firebase.initializeApp(config);
 export const firebaseFirestore = firebase.firestore();
 
+export const storeReport = async (document) => {
+  const data = {
+    name: 'Brasilia',
+    state: 'DF',
+    country: 'BR'
+  };
+
+  return firebaseFirestore.collection('relatorios').doc(document.name).set(data);
+}
+
+export const getReport = async (document) => {
+  return firebaseFirestore.collection('relatorios').doc(document.name);
+}
+
+
 /*
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
