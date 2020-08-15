@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
   body{
-    background: #3B67B7/* 4192D4 */;
+    background: #333 /* #3B67B7 #4192D4 */;
   }
   body, input, button {
     text-rendering: optimizeLegibility;

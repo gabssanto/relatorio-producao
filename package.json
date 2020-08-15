@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/pie": "^0.62.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -13,12 +14,15 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
+    "@types/react-vis": "^1.11.2",
     "@types/styled-components": "^5.1.1",
     "csv": "^5.3.2",
     "filesize": "^6.1.0",
     "firebase": "^7.17.1",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.19",
+    "nivo": "^0.31.0",
+    "randomcolor": "^0.6.2",
     "react": "^16.13.1",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.1",
@@ -26,8 +30,10 @@
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-vis": "^1.11.7",
     "styled-components": "^5.1.1",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
