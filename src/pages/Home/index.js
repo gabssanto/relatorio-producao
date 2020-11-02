@@ -1,11 +1,10 @@
 /* eslint-disable array-callback-return */
 import React, { useState } from 'react';
-import { uniqueId, camelCase, uniqBy } from 'lodash';
+import { uniqueId, uniqBy } from 'lodash';
 import filesize from 'filesize';
 import UploadButton from '../../components/UploadButton';
 import FileList from '../../components/FileList'
 import { Container, Report, Title } from './styles';
-import { firebaseFirestore } from '../../firebase';
 
 const regex = /[^a-zA-Z' ''ã''á''à''í''ú''ç']+/g;
 
