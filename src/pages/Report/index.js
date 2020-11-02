@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { RadialChart, DiscreteColorLegend } from 'react-vis';
 import Skeleton from 'react-loading-skeleton';
 import { ResponsivePie } from '@nivo/pie';
 import { ResponsiveWaffle } from '@nivo/waffle';
@@ -21,9 +20,6 @@ const Report = () => {
   useEffect(() => {
     getFile();
   }, []);
-  useEffect(() => {
-    console.log(file);
-  }, [file]);
   return (
     <Container>
       {!!file ? <h1>{file.local}</h1> : <h1><Skeleton count={2} /></h1>}

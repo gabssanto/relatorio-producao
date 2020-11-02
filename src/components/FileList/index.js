@@ -1,6 +1,6 @@
 import React from 'react';
-import { MdCheckCircle, MdError, MdLink } from 'react-icons/md';
-import { Container, FileInfo, Preview } from './styles';
+import { MdCheckCircle, MdError, MdArrowForward } from 'react-icons/md';
+import { Container, FileInfo } from './styles';
 
 function FileList({ files }) {
   return (
@@ -8,7 +8,6 @@ function FileList({ files }) {
       {files.map(uploadedFile => (
         <li key={uploadedFile.id}>
           <FileInfo>
-            <Preview src="https://avatars2.githubusercontent.com/u/16672623?v=4" />
             <div>
               <strong>{uploadedFile.name}</strong>
               <span>{uploadedFile.readableSize}{" "} {uploadedFile.url && <button>Excluir</button>}</span>
@@ -17,7 +16,7 @@ function FileList({ files }) {
 
           {uploadedFile.url && (
             <a href={`report/${encodeURIComponent(uploadedFile.url)}`} rel="noopener noreferrer">
-              <MdLink style={{ marginRight: 8 }} size={24} color="#222" />
+              <MdArrowForward style={{ marginRight: 8 }} size={24} color="#4192D4" />
             </a>
           )}
 

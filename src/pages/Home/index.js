@@ -1,10 +1,10 @@
 /* eslint-disable array-callback-return */
 import React, { useState } from 'react';
-import { uniqueId, camelCase } from 'lodash';
+import { uniqueId, camelCase, uniqBy } from 'lodash';
 import filesize from 'filesize';
 import UploadButton from '../../components/UploadButton';
 import FileList from '../../components/FileList'
-import { Container, Report } from './styles';
+import { Container, Report, Title } from './styles';
 import { firebaseFirestore } from '../../firebase';
 
 const regex = /[^a-zA-Z' ''ã''á''à''í''ú''ç']+/g;
@@ -27,10 +27,11 @@ const Home = () => {
       url: null,
     }));
     setUploadedFiles(uploadedFiles.concat(UFiles));
+
     UFiles.forEach(processUpload);
   }
 
-  const processUpload = (uploadedFile, index) => {
+  const processUpload = (uploadedFile) => {
     const reader = new FileReader()
     var parsedFile;
     var array = [];
@@ -271,8 +272,10 @@ const Home = () => {
         /* const fileName = `${json.ubs}/${json.equipe.replace(/['/']/g, '-')}/${json.periodo.inicio.replace(/['/']/g, '-')} a ${json.periodo.fim.replace(/['/']/g, '-')}`; */
         const fileName = `${json.periodo.inicio.replace(/['/']/g, '-')} a ${json.periodo.fim.replace(/['/']/g, '-')}`;
 
-        firebaseFirestore.collection('relatorios').doc(fileName).set(json);
-
+        if (reports && reports.length > 0) {
+          const uniqueReports = uniqBy([...reports, json], report => report.periodo.inicio)
+          setReports(uniqueReports);
+        } else if (!reports) setReports([json])
         setUploadedFiles([...uploadedFiles, { ...uploadedFile, url: fileName }])
       }
     }
@@ -281,28 +284,28 @@ const Home = () => {
 
   const [reports, setReports] = useState();
 
-  async function getFile() {
-    const res = await firebaseFirestore.collection('relatorios').get().then(querySnapshot => {
-      return querySnapshot.docs.map(doc => {
-        return doc.data();
-      })
-    });
-    setReports(res);
-  }
+  React.useEffect(() => {
+    if (reports)
+      localStorage.setItem('relatorios', JSON.stringify(reports));
+  }, [reports]);
 
   React.useEffect(() => {
-    getFile();
+    const localReports = JSON.parse(localStorage.getItem('relatorios'));
+    if (localReports)
+      setReports(localReports);
+    return () => reports && localStorage.setItem('relatorios', JSON.stringify(reports));
   }, []);
 
   return (
     <Container>
+      <Title>Adicionar novo Relatório</Title>
       <UploadButton onUpload={handleUpload} />
       {!!uploadedFiles.length && (
         <FileList files={uploadedFiles} />
       )}
-      {reports && <div style={{ margin: '10px 0 20px 0' }}>{reports[0].ubs}</div>}
-      {reports && reports.map((report, index) => (
-        <Report key={uniqueId()} style={{ margin: '10px 0' }}>
+      {reports && <Title>{reports[0].ubs}</Title>}
+      {reports && reports.map(report => (
+        <Report key={uniqueId()} style={{ margin: '10px 0' }} href={`report/${encodeURIComponent(`${report.periodo.inicio.replace(/['/']/g, '-')} a ${report.periodo.fim.replace(/['/']/g, '-')}`)}`} rel="noopener noreferrer">
           <div>
             Período: {report.periodo.inicio} - {report.periodo.fim}
           </div>

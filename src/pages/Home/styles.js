@@ -8,23 +8,19 @@ export const Container = styled.div`
   max-width: 1000px;
 `;
 
-export const Button = styled.div`
-  display: flex;
-  max-width: 300px;
-  width: 100%;
-  margin: 30px;
-  padding: 20px;
-  background-color: #efde9e;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+export const Title = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin: 20px 0;
 `;
 
-export const Report = styled.div`
+export const Report = styled.a`
   display: flex;
+  text-decoration: none;
   justify-content: center;
   align-items: center;
   background-color: #eee;
+  color: #333;
   padding: 8px 16px;
   border-radius: 4px;
   font-size: 16px;

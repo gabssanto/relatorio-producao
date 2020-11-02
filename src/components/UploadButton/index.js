@@ -5,7 +5,7 @@ import { DropContainer, UploadMessage } from './styles';
 const UploadButton = ({ onUpload }) => {
   const renderDragMessage = (isDragActive, isDragReject) => {
     if (!isDragActive) {
-      return <UploadMessage>Arraste arquivos aqui ...</UploadMessage>;
+      return <UploadMessage>Arraste um arquivo aqui ...</UploadMessage>;
     }
     if (isDragReject) {
       return <UploadMessage type="error">Arquivo não suportado, utilize apenas arquivos em csv</UploadMessage>
@@ -13,7 +13,7 @@ const UploadButton = ({ onUpload }) => {
     return <UploadMessage type="success">Solte os arquivos aqui</UploadMessage>
   }
 
-  return (<Dropzone accept="text/csv" onDropAccepted={onUpload}>
+  return (<Dropzone accept="text/csv" onDropAccepted={onUpload} multiple={false}>
     {
       ({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
         <DropContainer
