@@ -19,3 +19,19 @@ export const Button = styled.div`
   align-items: center;
   cursor: pointer;
 `;
+
+export const Report = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: 0.25s;
+  &:hover {
+    background-color: #4192D4;
+    color: #fff;
+    transition: 0.25s;
+  }
+`;

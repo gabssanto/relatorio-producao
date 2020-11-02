@@ -4,7 +4,7 @@ import { uniqueId, camelCase } from 'lodash';
 import filesize from 'filesize';
 import UploadButton from '../../components/UploadButton';
 import FileList from '../../components/FileList'
-import { Container } from './styles';
+import { Container, Report } from './styles';
 import { firebaseFirestore } from '../../firebase';
 
 const regex = /[^a-zA-Z' ''ã''á''à''í''ú''ç']+/g;
@@ -65,9 +65,9 @@ const Home = () => {
 
           }
         })
-        var resumoProducao = {};
-        var dadosGerais = {};
-        var turno = {};
+        /* var resumoProducao = [];
+        var dadosGerais = [];
+        var turno = [];
         var faixaEtaria = {};
         var sexo = {};
         var localDeAtendimento = {};
@@ -77,87 +77,9 @@ const Home = () => {
         var fornecimento = {};
         var condutaDesfecho = {};
         var encaminhamento = {};
-        var json = {};
-        array.map((element) => {
-          if (element[0] === 'Resumo de produção') {
-            element.map((el, index) => {
-              if (index !== 0)
-                resumoProducao[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Dados gerais') {
-            element.map((el, index) => {
-              if (index !== 0)
-                dadosGerais[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Turno') {
-            element.map((el, index) => {
-              if (index !== 0)
-                turno[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Faixa etária') {
-            element.map((el, index) => {
-              if (index !== 0 && index !== 1) {
-                faixaEtaria[camelCase(el.split(';')[0])] = {
-                  masculino: Number(el.split(';')[1]),
-                  feminino: Number(el.split(';')[2]),
-                  naoInformado: Number(el.split(';')[3]),
-                }
-              }
-            })
-          }
-          if (element[0] === 'Sexo') {
-            element.map((el, index) => {
-              if (index !== 0)
-                sexo[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Local de atendimento') {
-            element.map((el, index) => {
-              if (index !== 0)
-                localDeAtendimento[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Tipo de atendimento') {
-            element.map((el, index) => {
-              if (index !== 0)
-                tiposDeAtendimento[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Vigilância em saúde bucal') {
-            element.map((el, index) => {
-              if (index !== 0)
-                vigilanciaEmSaudeBucal[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Procedimentos') {
-            element.map((el, index) => {
-              if (index !== 0)
-                procedimentos[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Fornecimento') {
-            element.map((el, index) => {
-              if (index !== 0)
-                fornecimento[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Conduta / Desfecho') {
-            element.map((el, index) => {
-              if (index !== 0)
-                condutaDesfecho[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-          if (element[0] === 'Encaminhamento') {
-            element.map((el, index) => {
-              if (index !== 0)
-                encaminhamento[camelCase(el.replace(regex, ''))] = Number(el.replace(/\D/g, ''))
-            })
-          }
-        })
-        json = {
+        var json = {}; */
+
+        var json = {
           local: array[0].join(),
           uf: array[0][0],
           municipio: array[0][1],
@@ -167,21 +89,187 @@ const Home = () => {
             fim: array[1][0].replace('Período;', '').split(' a ')[1],
           },
           equipe: array[1][1].replace('Equipe;', ''),
-          resumoProducao,
-          dadosGerais,
-          turno,
-          faixaEtaria,
-          sexo,
-          localDeAtendimento,
-          tiposDeAtendimento,
-          vigilanciaEmSaudeBucal,
-          procedimentos,
-          fornecimento,
-          condutaDesfecho,
-          encaminhamento
+          resumoProducao: [],
+          dadosGerais: [],
+          turno: [],
+          faixaEtaria: [],
+          sexo: [],
+          localDeAtendimento: [],
+          tiposDeAtendimento: [],
+          tipoDeConsulta: [],
+          vigilanciaEmSaudeBucal: [],
+          procedimentos: [],
+          fornecimento: [],
+          condutaDesfecho: [],
+          encaminhamento: [],
         }
+        array.map((element) => {
+          if (element[0] === 'Resumo de produção') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.resumoProducao.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Dados gerais') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.dadosGerais.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Turno') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.turno.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Faixa etária') {
+            element.map((el, index) => {
+              if (el.split(';')[0] === 'Menos de 01 ano') {
+                json.faixaEtaria.push({
+                  id: '≤ 01',
+                  label: '≤ 01',
+                  masculino: Number(el.split(';')[1]),
+                  feminino: Number(el.split(';')[2]),
+                  naoInformado: Number(el.split(';')[3]),
+                });
+              }
+              else if (index !== 0 && index !== 1) {
+                if (el.split(';')[0] === 'Não informado') {
+                  json.faixaEtaria.push({
+                    id: 'Não inform.',
+                    label: 'Não inform.',
+                    masculino: Number(el.split(';')[1]),
+                    feminino: Number(el.split(';')[2]),
+                    naoInformado: Number(el.split(';')[3]),
+                  });
+                }
+                else if (el.split(';')[0].replace(' anos', '') === '80 ou mais') {
+                  json.faixaEtaria.push({
+                    id: '≥ 80',
+                    label: '≥ 80',
+                    masculino: Number(el.split(';')[1]),
+                    feminino: Number(el.split(';')[2]),
+                    naoInformado: Number(el.split(';')[3]),
+                  });
+                }
+                else {
+                  json.faixaEtaria.push({
+                    id: el.split(';')[0].replace(' anos', ''),
+                    label: el.split(';')[0].replace(' anos', ''),
+                    masculino: Number(el.split(';')[1]),
+                    feminino: Number(el.split(';')[2]),
+                    naoInformado: Number(el.split(';')[3]),
+                  });
+                }
+              }
+            })
+          }
+          if (element[0] === 'Sexo') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.sexo.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Local de atendimento') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.localDeAtendimento.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Tipo de atendimento') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.tiposDeAtendimento.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Tipo de consulta') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.tipoDeConsulta.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Vigilância em saúde bucal') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.vigilanciaEmSaudeBucal.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Procedimentos') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.procedimentos.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Fornecimento') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.fornecimento.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Conduta / Desfecho') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.condutaDesfecho.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+          if (element[0] === 'Encaminhamento') {
+            element.map((el, index) => {
+              if (index !== 0)
+                json.encaminhamento.push({
+                  id: el.replace(regex, ''),
+                  label: el.replace(regex, ''),
+                  value: Number(el.replace(/\D/g, ''))
+                });
+            })
+          }
+        })
 
-        const fileName = `${json.ubs}/${json.equipe.replace(/['/']/g, '-')}/${json.periodo.inicio.replace(/['/']/g, '-')} a ${json.periodo.fim.replace(/['/']/g, '-')}`;
+        /* const fileName = `${json.ubs}/${json.equipe.replace(/['/']/g, '-')}/${json.periodo.inicio.replace(/['/']/g, '-')} a ${json.periodo.fim.replace(/['/']/g, '-')}`; */
+        const fileName = `${json.periodo.inicio.replace(/['/']/g, '-')} a ${json.periodo.fim.replace(/['/']/g, '-')}`;
 
         firebaseFirestore.collection('relatorios').doc(fileName).set(json);
 
@@ -191,12 +279,36 @@ const Home = () => {
     reader.readAsBinaryString(uploadedFile.file)
   }
 
+  const [reports, setReports] = useState();
+
+  async function getFile() {
+    const res = await firebaseFirestore.collection('relatorios').get().then(querySnapshot => {
+      return querySnapshot.docs.map(doc => {
+        return doc.data();
+      })
+    });
+    setReports(res);
+  }
+
+  React.useEffect(() => {
+    getFile();
+  }, []);
+
   return (
     <Container>
       <UploadButton onUpload={handleUpload} />
       {!!uploadedFiles.length && (
         <FileList files={uploadedFiles} />
       )}
+      {reports && <div style={{ margin: '10px 0 20px 0' }}>{reports[0].ubs}</div>}
+      {reports && reports.map((report, index) => (
+        <Report key={uniqueId()} style={{ margin: '10px 0' }}>
+          <div>
+            Período: {report.periodo.inicio} - {report.periodo.fim}
+          </div>
+        </Report>
+      ))}
+
     </Container>
   );
 }

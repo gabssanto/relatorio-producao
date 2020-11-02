@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { RadialChart, DiscreteColorLegend } from 'react-vis';
-import { ResponsivePie } from '@nivo/pie'
+import Skeleton from 'react-loading-skeleton';
+import { ResponsivePie } from '@nivo/pie';
+import { ResponsiveWaffle } from '@nivo/waffle';
+import { ResponsiveBar } from '@nivo/bar';
 import { Container, Hint } from './styles';
 import { useParams } from 'react-router-dom';
 import { firebaseFirestore } from '../../firebase';
+import PieChart from './PieChart';
 
 const Report = () => {
   const { fileName } = useParams();
@@ -22,74 +26,126 @@ const Report = () => {
   }, [file]);
   return (
     <Container>
-      {!!file ? <h1>{file.local}</h1> : <h1>Carregando local</h1>}
+      {!!file ? <h1>{file.local}</h1> : <h1><Skeleton count={2} /></h1>}
+      {!!file ? <h2>Equipe: {file.equipe}</h2> : <h2><Skeleton /></h2>}
+      {!!file ? <h3>Período: {file.periodo.inicio} a {file.periodo.fim}</h3> : <h3><Skeleton /></h3>}
       {!!hover && hover !== false && <Hint>{hover.label}</Hint>}
-      {/* <RadialChart
-        animation
-        data={!!file ? [{ angle: file.resumoProducao.registrosIdentificados, label: `${file.resumoProducao.registrosIdentificados}` }, { angle: file.resumoProducao.registrosNaoIdentificados, label: `${file.resumoProducao.registrosNaoIdentificados}` }] : [{ angle: 10 }, { angle: 10 }]}
-        onValueMouseOver={v => setHover(v)}
-        onSeriesMouseOut={() => setHover(false)}
-        width={300}
-        height={300} />
-      <DiscreteColorLegend height={100} width={300} items={['Registros Identificados', 'Registros Não Identificados']} /> */}
-      <div style={{ height: 300 }}>
-        {!!file && (
-          <ResponsivePie
-            data={[
-              {
-                "id": 'Registros Identificados',
-                "label": 'Registros Identificados',
-                "value": file.resumoProducao.registrosIdentificados,
-              },
-              {
-                "id": 'Registros Não Identificados',
-                "label": 'Registros Não Identificados',
-                "value": file.resumoProducao.registrosNaoIdentificados,
-              },
-            ]}
-            enableSlicesLabels={false}
-            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-            padAngle={0.7}
-            innerRadius={0.5}
-            colors={{ scheme: 'category10' }}
-            borderWidth={1}
-            borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-            radialLabelsSkipAngle={10}
-            radialLabelsTextXOffset={6}
-            radialLabelsTextColor="#333333"
-            radialLabelsLinkOffset={0}
-            radialLabelsLinkDiagonalLength={16}
-            radialLabelsLinkHorizontalLength={24}
-            radialLabelsLinkStrokeWidth={1}
-            radialLabelsLinkColor={{ from: 'color' }}
-            slicesLabelsSkipAngle={10}
-            slicesLabelsTextColor="#333333"
-            animate={true}
-            motionStiffness={90}
-            motionDamping={15}
-            legends={[
-              {
-                anchor: 'bottom',
-                direction: 'row',
-                translateY: 70,
-                itemWidth: 150,
-                itemHeight: 22,
-                itemTextColor: '#999',
-                symbolSize: 18,
-                symbolShape: 'circle',
-                effects: [
-                  {
-                    on: 'hover',
-                    style: {
-                      itemTextColor: '#000'
+      {!!file && (
+        <>
+          <PieChart title="Resumo de Produção" data={file.resumoProducao} />
+          <PieChart title="Dados Gerais" data={file.dadosGerais} />
+          <PieChart title="Turno" data={file.turno} />
+          <p>Faixa Etária</p>
+          <div style={{ height: 300 }}>
+            <ResponsiveBar
+              data={file.faixaEtaria}
+              keys={['masculino', 'feminino', 'naoInformado']}
+              indexBy="label"
+              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+              padding={0.3}
+              colors={{ scheme: 'category10' }}
+              borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'Idade (em anos)',
+                legendPosition: 'middle',
+                legendOffset: 32
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'Total',
+                legendPosition: 'middle',
+                legendOffset: -40
+              }}
+              labelSkipWidth={12}
+              labelSkipHeight={12}
+              labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+              legends={[
+                {
+                  dataFrom: 'keys',
+                  anchor: 'bottom-right',
+                  direction: 'column',
+                  justify: false,
+                  translateX: 120,
+                  translateY: 0,
+                  itemsSpacing: 2,
+                  itemWidth: 100,
+                  itemHeight: 20,
+                  itemDirection: 'left-to-right',
+                  itemOpacity: 0.85,
+                  symbolSize: 20,
+                  effects: [
+                    {
+                      on: 'hover',
+                      style: {
+                        itemOpacity: 1
+                      }
                     }
-                  }
-                ]
-              }
-            ]}
-          />
-        )}
-      </div>
+                  ]
+                }
+              ]}
+              animate={true}
+              motionStiffness={90}
+              motionDamping={15}
+            />
+          </div>
+          <PieChart title="Sexo" data={file.sexo} />
+
+          <p>Local de Atendimento</p>
+          <div style={{ height: 300 }}>
+            <ResponsiveWaffle
+              data={file.localDeAtendimento}
+              total={file.localDeAtendimento.reduce((total, num) => total + num.value, 0)}
+              rows={18}
+              columns={14}
+              margin={{ top: 10, right: 10, bottom: 10, left: 120 }}
+              colors={{ scheme: 'nivo' }}
+              borderColor={{ from: 'color', modifiers: [['darker', 0.3]] }}
+              animate={true}
+              motionStiffness={90}
+              motionDamping={11}
+              legends={[
+                {
+                  anchor: 'top-left',
+                  direction: 'column',
+                  justify: false,
+                  translateX: -100,
+                  translateY: 0,
+                  itemsSpacing: 4,
+                  itemWidth: 100,
+                  itemHeight: 20,
+                  itemDirection: 'left-to-right',
+                  itemOpacity: 1,
+                  itemTextColor: '#777',
+                  symbolSize: 20,
+                  effects: [
+                    {
+                      on: 'hover',
+                      style: {
+                        itemTextColor: '#000',
+                        itemBackground: '#f7fafb'
+                      }
+                    }
+                  ]
+                }
+              ]}
+            />
+          </div>
+          <PieChart title="Tipo de Atendimento" data={file.tiposDeAtendimento} />
+          <PieChart title="Tipo de Consulta" data={file.tipoDeConsulta} />
+          <PieChart title="Vigilância em saúde bucal" data={file.vigilanciaEmSaudeBucal} />
+          <PieChart title="Procedimentos" data={file.procedimentos} />
+          <PieChart title="Fornecimento" data={file.fornecimento} />
+          <PieChart title="Conduta / Desfecho" data={file.condutaDesfecho} />
+          <PieChart title="Encaminhamento" data={file.encaminhamento} />
+        </>
+      )}
 
     </Container>
   );

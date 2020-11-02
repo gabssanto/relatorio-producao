@@ -5,7 +5,6 @@ export const Container = styled.div`
   margin-right: auto;
   background-color: #fff;
   padding: 20px;
-  max-width: 1000px;
 `;
 
 export const Hint = styled.div`
