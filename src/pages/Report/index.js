@@ -1,37 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
-import { ResponsivePie } from '@nivo/pie';
 import { ResponsiveWaffle } from '@nivo/waffle';
 import { ResponsiveBar } from '@nivo/bar';
-import { Container, Hint } from './styles';
+import { Container, Title, HeaderContainer } from './styles';
 import { useParams } from 'react-router-dom';
-import { firebaseFirestore } from '../../firebase';
+/* import { firebaseFirestore } from '../../firebase'; */
 import PieChart from './PieChart';
 
 const Report = () => {
   const { fileName } = useParams();
   const [file, setFile] = useState();
-  const [hover, setHover] = useState();
 
-  async function getFile() {
-    const res = await firebaseFirestore.collection('relatorios').doc(decodeURIComponent(fileName)).get();
-    setFile(res.data());
+  function getFile() {
+    /* const res = await firebaseFirestore.collection('relatorios').doc(decodeURIComponent(fileName)).get();
+    setFile(res.data()); */
+    const decodedUri = decodeURIComponent(fileName);
+    const files = JSON.parse(localStorage.getItem('relatorios'));
+    const uriParser = decodedUri.replaceAll('-', '/').split(' a ');
+    setFile(files.filter(file => file.periodo.inicio === uriParser[0] && file.periodo.fim === uriParser[1])[0])
   }
+
   useEffect(() => {
     getFile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /* const handlePrint = (e) => {
+    e.preventDefault();
+    // is getElementById an anti pattern even if I'm not modyfying the DOM?
+    const node = document.getElementById("printableReport");
+    window.open(node, "PRINT", "height=400,width=600");
+  } */
+
   return (
-    <Container>
-      {!!file ? <h1>{file.local}</h1> : <h1><Skeleton count={2} /></h1>}
-      {!!file ? <h2>Equipe: {file.equipe}</h2> : <h2><Skeleton /></h2>}
-      {!!file ? <h3>Período: {file.periodo.inicio} a {file.periodo.fim}</h3> : <h3><Skeleton /></h3>}
-      {!!hover && hover !== false && <Hint>{hover.label}</Hint>}
+    <Container id="printableReport">
+      {/* <button type="submit" onClick={(e) => handlePrint(e)}>
+        button
+      </button> */}
       {!!file && (
         <>
+          <HeaderContainer>
+            <h1>UBS: {file.ubs}</h1>
+            <h2>Local: {`${file.uf}, ${file.municipio}`}</h2>
+            <h3>Equipe: {file.equipe}</h3>
+            <h4>Período: {file.periodo.inicio} a {file.periodo.fim}</h4>
+          </HeaderContainer>
           <PieChart title="Resumo de Produção" data={file.resumoProducao} />
           <PieChart title="Dados Gerais" data={file.dadosGerais} />
           <PieChart title="Turno" data={file.turno} />
-          <p>Faixa Etária</p>
+          <Title>Faixa Etária</Title>
           <div style={{ height: 300 }}>
             <ResponsiveBar
               data={file.faixaEtaria}
@@ -93,7 +109,7 @@ const Report = () => {
           </div>
           <PieChart title="Sexo" data={file.sexo} />
 
-          <p>Local de Atendimento</p>
+          <Title>Local de Atendimento</Title>
           <div style={{ height: 300 }}>
             <ResponsiveWaffle
               data={file.localDeAtendimento}

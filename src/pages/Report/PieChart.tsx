@@ -1,4 +1,5 @@
 import React from 'react';
+import { Title } from './styles';
 import { ResponsivePie, PieDatum } from '@nivo/pie';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 const PieChart: React.FC<Props> = ({ title, data }) => {
   return (
     <>
-      <p>{title}</p>
+      <Title>{title}</Title>
       <div style={{ height: 300 }}>
         <ResponsivePie
           data={data}

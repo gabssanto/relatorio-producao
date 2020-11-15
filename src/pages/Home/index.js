@@ -293,6 +293,7 @@ const Home = () => {
     if (localReports)
       setReports(localReports);
     return () => reports && localStorage.setItem('relatorios', JSON.stringify(reports));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
