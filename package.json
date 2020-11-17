@@ -1,6 +1,8 @@
 {
   "name": "relatorio-producao",
   "version": "0.1.0",
+  "homepage": "./",
+  "main": "./electron/main.js",
   "private": true,
   "dependencies": {
     "@nivo/bar": "^0.62.0",
@@ -13,12 +15,16 @@
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.158",
     "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
+    "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-vis": "^1.11.2",
     "@types/styled-components": "^5.1.1",
+    "concurrently": "^5.3.0",
     "csv": "^5.3.2",
+    "electron": "^11.0.0",
+    "electron-builder": "^22.9.1",
+    "electron-is-dev": "^1.2.0",
     "filesize": "^6.1.0",
     "firebase": "^7.17.1",
     "fs": "^0.0.1-security",
@@ -33,14 +39,18 @@
     "react-loading-skeleton": "^2.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-to-print": "^2.11.0",
     "react-vis": "^1.11.7",
     "styled-components": "^5.1.1",
     "typescript": "~3.7.2",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "wait-on": "^5.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "ebuild": "npm run build && node_modules/.bin/build",
+    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

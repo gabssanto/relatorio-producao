@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ResponsiveWaffle } from '@nivo/waffle';
 import { ResponsiveBar } from '@nivo/bar';
-import { Container, Title, HeaderContainer } from './styles';
+import { Container, Title, HeaderContainer, BackButton, SavePDFButton, Header } from './styles';
 import { useParams } from 'react-router-dom';
 /* import { firebaseFirestore } from '../../firebase'; */
+import ReactToPrint from 'react-to-print';
 import PieChart from './PieChart';
+import { MdArrowBack, MdPrint } from 'react-icons/md';
 
 const Report = () => {
   const { fileName } = useParams();
   const [file, setFile] = useState();
+  const printRef = useRef(null);
 
   function getFile() {
     /* const res = await firebaseFirestore.collection('relatorios').doc(decodeURIComponent(fileName)).get();
@@ -32,10 +35,14 @@ const Report = () => {
   } */
 
   return (
-    <Container id="printableReport">
-      {/* <button type="submit" onClick={(e) => handlePrint(e)}>
-        button
-      </button> */}
+    <Container ref={printRef}>
+      <Header>
+        <BackButton href="/"><MdArrowBack /> Voltar</BackButton>
+        <ReactToPrint
+          trigger={() => <SavePDFButton><MdPrint /> Salvar PDF</SavePDFButton>}
+          content={() => printRef.current}
+        />
+      </Header>
       {!!file && (
         <>
           <HeaderContainer>
