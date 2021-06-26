@@ -4,7 +4,8 @@ import { uniqueId, uniqBy } from 'lodash';
 import filesize from 'filesize';
 import UploadButton from '../../components/UploadButton';
 import FileList from '../../components/FileList'
-import { Container, Report, Title } from './styles';
+import { Container, Report, Title, ReportWrapper } from './styles';
+import { BsTrashFill } from 'react-icons/bs'
 
 const regex = /[^a-zA-Z' ''ã''á''à''í''ú''ç']+/g;
 
@@ -296,6 +297,12 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleDeleteReport = (index) => {
+    if (!reports) return;
+
+    setReports(reports.filter((_, i) => i !== index));
+  };
+
   return (
     <Container>
       <Title>Adicionar novo Relatório</Title>
@@ -304,14 +311,20 @@ const Home = () => {
         <FileList files={uploadedFiles} />
       )}
       {reports && <Title>{reports[0].ubs}</Title>}
-      {reports && reports.map(report => (
-        <Report key={uniqueId()} style={{ margin: '10px 0' }} href={`report/${encodeURIComponent(`${report.periodo.inicio.replace(/['/']/g, '-')} a ${report.periodo.fim.replace(/['/']/g, '-')}`)}`} rel="noopener noreferrer">
-          <div>
-            Período: {report.periodo.inicio} - {report.periodo.fim}
-          </div>
-        </Report>
+      {reports && reports.map((report, index) => (
+        <ReportWrapper key={uniqueId()}>
+          <Report href={`report/${encodeURIComponent(`${report.periodo.inicio.replace(/['/']/g, '-')} a ${report.periodo.fim.replace(/['/']/g, '-')}`)}`} rel="noopener noreferrer">
+            <div>
+              Período: {report.periodo.inicio} - {report.periodo.fim}
+            </div>
+          </Report>
+          <BsTrashFill onClick={() => handleDeleteReport(index)} fill="red" size={24} style={{ cursor: 'pointer' }}  />
+        </ReportWrapper>
       ))}
-
+      <h2>Obter relatorio geral</h2>
+      <Report href={'report/summary'} rel="noopener noreferrer">
+        Clique aqui para obter o Relatorio Geral
+      </Report>
     </Container>
   );
 }

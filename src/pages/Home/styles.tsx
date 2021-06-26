@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-left: auto;
-  margin-right: auto;
+  overflow: hidden;
   background-color: #fff;
   padding:20px;
   max-width: 1000px;
@@ -15,6 +14,9 @@ export const Title = styled.div`
 `;
 
 export const Report = styled.a`
+  cursor: pointer;
+  margin: 10px 0;
+  margin-right: 16px;
   display: flex;
   text-decoration: none;
   justify-content: center;
@@ -30,4 +32,15 @@ export const Report = styled.a`
     color: #fff;
     transition: 0.25s;
   }
+`;
+
+export const ReportWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100vw;
+`;
+
+export const DeleteWrapper = styled.div`
+
 `;
