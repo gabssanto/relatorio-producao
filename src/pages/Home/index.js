@@ -322,7 +322,7 @@ const Home = () => {
         </ReportWrapper>
       ))}
       <h2>Obter relatorio geral</h2>
-      <Report href={'report/summary'} rel="noopener noreferrer">
+      <Report href='summary' rel="noopener noreferrer">
         Clique aqui para obter o Relatorio Geral
       </Report>
     </Container>

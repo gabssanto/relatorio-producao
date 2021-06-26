@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ResponsiveWaffle } from '@nivo/waffle';
 import { ResponsiveBar } from '@nivo/bar';
-import { Container, Title, HeaderContainer, BackButton, SavePDFButton, Header } from './styles';
+import { Container, Title, HeaderContainer } from './styles';
 import { useParams } from 'react-router-dom';
-/* import { firebaseFirestore } from '../../firebase'; */
-import ReactToPrint from 'react-to-print';
 import PieChart from './PieChart';
-import { MdArrowBack, MdPrint } from 'react-icons/md';
+import HeaderComponent from '../../components/common/Header';
 
 const Report = () => {
   const { fileName } = useParams();
@@ -36,13 +34,7 @@ const Report = () => {
 
   return (
     <Container ref={printRef}>
-      <Header>
-        <BackButton href="/"><MdArrowBack /> Voltar</BackButton>
-        <ReactToPrint
-          trigger={() => <SavePDFButton><MdPrint /> Salvar PDF</SavePDFButton>}
-          content={() => printRef.current}
-        />
-      </Header>
+      <HeaderComponent printRef={printRef} />
       {!!file && (
         <>
           <HeaderContainer>
