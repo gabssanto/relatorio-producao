@@ -31,7 +31,6 @@ const Report = () => {
     const node = document.getElementById("printableReport");
     window.open(node, "PRINT", "height=400,width=600");
   } */
-
   return (
     <Container ref={printRef}>
       <HeaderComponent printRef={printRef} />

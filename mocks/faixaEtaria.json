@@ -1,0 +1,156 @@
+[
+  {
+    "id": "≤ 01",
+    "label": "≤ 01",
+    "masculino": 0,
+    "feminino": 0,
+    "naoInformado": 0
+  },
+  {
+    "id": "01 ano",
+    "label": "01 ano",
+    "masculino": 0,
+    "feminino": 1,
+    "naoInformado": 0
+  },
+  {
+    "id": "02",
+    "label": "02",
+    "masculino": 3,
+    "feminino": 1,
+    "naoInformado": 0
+  },
+  {
+    "id": "03",
+    "label": "03",
+    "masculino": 2,
+    "feminino": 0,
+    "naoInformado": 0
+  },
+  {
+    "id": "04",
+    "label": "04",
+    "masculino": 4,
+    "feminino": 1,
+    "naoInformado": 0
+  },
+  {
+    "id": "05 a 09",
+    "label": "05 a 09",
+    "masculino": 5,
+    "feminino": 5,
+    "naoInformado": 0
+  },
+  {
+    "id": "10 a 14",
+    "label": "10 a 14",
+    "masculino": 7,
+    "feminino": 5,
+    "naoInformado": 0
+  },
+  {
+    "id": "15 a 19",
+    "label": "15 a 19",
+    "masculino": 5,
+    "feminino": 13,
+    "naoInformado": 0
+  },
+  {
+    "id": "20 a 24",
+    "label": "20 a 24",
+    "masculino": 12,
+    "feminino": 15,
+    "naoInformado": 0
+  },
+  {
+    "id": "25 a 29",
+    "label": "25 a 29",
+    "masculino": 0,
+    "feminino": 11,
+    "naoInformado": 0
+  },
+  {
+    "id": "30 a 34",
+    "label": "30 a 34",
+    "masculino": 2,
+    "feminino": 11,
+    "naoInformado": 0
+  },
+  {
+    "id": "35 a 39",
+    "label": "35 a 39",
+    "masculino": 1,
+    "feminino": 12,
+    "naoInformado": 0
+  },
+  {
+    "id": "40 a 44",
+    "label": "40 a 44",
+    "masculino": 3,
+    "feminino": 6,
+    "naoInformado": 0
+  },
+  {
+    "id": "45 a 49",
+    "label": "45 a 49",
+    "masculino": 3,
+    "feminino": 5,
+    "naoInformado": 0
+  },
+  {
+    "id": "50 a 54",
+    "label": "50 a 54",
+    "masculino": 2,
+    "feminino": 6,
+    "naoInformado": 0
+  },
+  {
+    "id": "55 a 59",
+    "label": "55 a 59",
+    "masculino": 2,
+    "feminino": 4,
+    "naoInformado": 0
+  },
+  {
+    "id": "60 a 64",
+    "label": "60 a 64",
+    "masculino": 6,
+    "feminino": 2,
+    "naoInformado": 0
+  },
+  {
+    "id": "65 a 69",
+    "label": "65 a 69",
+    "masculino": 0,
+    "feminino": 1,
+    "naoInformado": 0
+  },
+  {
+    "id": "70 a 74",
+    "label": "70 a 74",
+    "masculino": 0,
+    "feminino": 4,
+    "naoInformado": 0
+  },
+  {
+    "id": "75 a 79",
+    "label": "75 a 79",
+    "masculino": 0,
+    "feminino": 0,
+    "naoInformado": 0
+  },
+  {
+    "id": "≥ 80",
+    "label": "≥ 80",
+    "masculino": 0,
+    "feminino": 0,
+    "naoInformado": 0
+  },
+  {
+    "id": "Não inform.",
+    "label": "Não inform.",
+    "masculino": 0,
+    "feminino": 0,
+    "naoInformado": 0
+  }
+]
