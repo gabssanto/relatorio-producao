@@ -12,8 +12,6 @@ const Report = () => {
   const printRef = useRef(null);
 
   function getFile() {
-    /* const res = await firebaseFirestore.collection('relatorios').doc(decodeURIComponent(fileName)).get();
-    setFile(res.data()); */
     const decodedUri = decodeURIComponent(fileName);
     const files = JSON.parse(localStorage.getItem('relatorios'));
     const uriParser = decodedUri.replaceAll('-', '/').split(' a ');

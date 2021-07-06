@@ -2,7 +2,7 @@
   "name": "relatorio-producao",
   "version": "0.1.0",
   "homepage": "./",
-  "main": "./electron/main.js",
+  "main": "./electron/main.ts",
   "private": true,
   "dependencies": {
     "@nivo/bar": "^0.62.0",
@@ -23,7 +23,7 @@
     "concurrently": "^5.3.0",
     "csv": "^5.3.2",
     "electron": "^11.0.0",
-    "electron-builder": "^22.9.1",
+    "electron-builder": "^22.11.7",
     "electron-is-dev": "^1.2.0",
     "filesize": "^6.1.0",
     "firebase": "^7.17.1",
