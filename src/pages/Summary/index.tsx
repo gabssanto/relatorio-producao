@@ -1,114 +1,116 @@
-import React, { useRef } from 'react';
-import { ResponsiveBar } from '@nivo/bar';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
+
 import HeaderComponent from '../../components/common/Header';
+import BarChart from '../../components/common/BarChart';
 
 import { Container } from './styles';
-import { useState } from 'react';
+import { mapToArray, parseFaixaEtaria } from './utils';
+import { flattenDeep } from 'lodash';
+
+type SummaryValues = {
+  data: object;
+  keys: string[];
+  legend: string;
+}
+
+type SummaryData = {
+  resumoProducao: SummaryValues;
+  dadosGerais: SummaryValues;
+  turno: SummaryValues;
+  faixaEtaria: SummaryValues;
+};
+
+const summaryTemplate: SummaryData = {
+  resumoProducao: {
+    data: {},
+    keys: ['Registros identificados', 'Registros não identificados'],
+    legend: 'Resumo de Produção'
+  },
+  dadosGerais: {
+    data: {},
+    keys: ['Gestante', 'Paciente com necessidades especiais'],
+    legend: 'Dados Gerais'
+  },
+  turno: {
+    data: {},
+    keys: ['Manhã', 'Tarde', 'Noite', 'Não informado'],
+    legend: 'Turno'
+  },
+  faixaEtaria: {
+    data: {},
+    keys: [],
+    legend: 'Faixa Etaria',
+  }
+}
 
 const Summary: React.FC = () => {
   const printRef = useRef(null);
-  const [productionSummary, setProductionSummary] = useState({});
-
-  const monthsObj = {
-    1: 'Jan',
-    2: 'Fev',
-    3: 'Março',
-    4: 'Abril',
-    5: 'Maio',
-    6: 'Junho',
-    7: 'Julho',
-    8: 'Agosto',
-    9: 'Setembro',
-    10: 'Outubro',
-    11: 'Novembro',
-    12: 'Dezembro',
-  }
+  const [summary, setSummary] = useState<SummaryData>(summaryTemplate);
 
   useEffect(() => {
     const localReports = JSON.parse(localStorage.getItem('relatorios') || '[]');
-    const resumoProducaoPorMes =
-    localReports.reduce((reports, report) => {
-      const month = monthsObj[Number(report.periodo.inicio.split('/')[1])];
-      const resumoProducao = report.resumoProducao.reduce((resumos, resumo) => ({
-        ...resumos,
-        [resumo.label]: resumo.value
-      }), {})
-      return {
-        ...reports,
-        [month]: {
-          ...resumoProducao,
-          month
-        }
-      };
-    }, {})
-    setProductionSummary(resumoProducaoPorMes);
-    // console.log(localReports.map(report => report));
+    const resumoProducaoPorMes = mapToArray(localReports, 'resumoProducao');
+    const dadosGeraisMes = mapToArray(localReports, 'dadosGerais');
+    const shiftMes = mapToArray(localReports, 'turno');
+    const faixaEtaria = parseFaixaEtaria(localReports, 'faixaEtaria');
+    // console.log(faixaEtaria);
+
+
+    setSummary({
+      ...summary,
+      resumoProducao: {
+        ...summary.resumoProducao,
+        data: resumoProducaoPorMes,
+      },
+      dadosGerais: {
+        ...summary.dadosGerais,
+        data: dadosGeraisMes,
+      },
+      turno: {
+        ...summary.turno,
+        data: shiftMes,
+      },
+      faixaEtaria: {
+        ...summary.faixaEtaria,
+        data: faixaEtaria,
+      }
+    });
+    // console.log(shiftMes);
+
+    // console.log(localReports.map(report => report.dadosGerais), resumoProducaoPorMes);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(Object.keys(productionSummary).map(key => key !== 'month' && productionSummary[String(key)] ));
+  // console.log(Object.keys(summary).map(type => summary[type]));
+
+
+  // console.log(Object.keys(productionSummary).map(key => key !== 'month' && productionSummary[String(key)] ));
   return (
     <Container ref={printRef}>
       <HeaderComponent printRef={printRef} />
-      <div style={{ height: 400 }}>
-        <ResponsiveBar
-          data={Object.values(Object.keys(productionSummary).map(key => key !== 'month' && productionSummary[key] ))}
-          keys={['Registros identificados', 'Registros não identificados']}
-          indexBy='month'
-          margin={{ top: 50, right: 50, bottom: 100, left: 50 }}
-          padding={0.3}
-          colors={{ scheme: 'category10' }}
-          borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'Resumo de Produção',
-            legendPosition: 'middle',
-            legendOffset: 32
-          }}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'Total',
-            legendPosition: 'middle',
-            legendOffset: -40
-          }}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          legends={[
-            {
-              dataFrom: 'keys',
-              anchor: 'bottom',
-              direction: 'row',
-              justify: false,
-              translateY: 80,
-              itemsSpacing: 2,
-              itemWidth: 200,
-              itemHeight: 20,
-              itemDirection: 'left-to-right',
-              itemOpacity: 0.85,
-              symbolSize: 20,
-              effects: [
-                {
-                  on: 'hover',
-                  style: {
-                    itemOpacity: 1
-                  }
-                }
-              ]
-            }
-          ]}
-          animate={true}
-          motionStiffness={90}
-          motionDamping={15}
-        />
-        </div>
+      {Object.keys(summary).map(type => {
+        if (type === 'faixaEtaria') {
+          // console.log(summary[type].data)
+          console.log(Array.from(new Set(flattenDeep(Object.values(summary[type].data).map(month => month.data.map(age => Object.keys(age)))))))
+          return (
+            <BarChart
+              key={type}
+              data={Object.values(Object.keys(summary[type].data).map(key => summary[type].data[key]['data']))}
+              keys={Array.from(new Set(flattenDeep(Object.values(summary[type].data).map(month => month.data.map(age => Object.keys(age))))))}
+              legend={summary[type].legend}
+            />
+            )
+          }
+          return (
+            <BarChart
+              key={type}
+              data={Object.values(Object.keys(summary[type].data).map(key => summary[type].data[key]))}
+              keys={summary[type].keys}
+              legend={summary[type].legend}
+            />
+          )
+      })}
     </Container>
   );
 }

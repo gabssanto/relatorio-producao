@@ -4,7 +4,10 @@ export const Container = styled.div`
   overflow: hidden;
   background-color: #fff;
   padding:20px;
-  max-width: 1000px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const Title = styled.div`
