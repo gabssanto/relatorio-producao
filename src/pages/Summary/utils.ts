@@ -1,3 +1,5 @@
+import { SummaryData } from "./types";
+
 export const monthsObj = {
   1: 'Jan',
   2: 'Fev',
@@ -29,22 +31,91 @@ export const mapToArray = (localReports, type: string) => localReports.reduce((r
 
   //this could become a npm lib, merging nested json into one composed key
 const parseFaixaBySex = (resumo) => {
-  return {
-    [resumo.id + ' Masculino']: resumo.masculino,
-    [resumo.id + ' Feminino']: resumo.feminino,
-    [resumo.id + ' Não Informado']: resumo.naoInformado,
-  }
+  return Number(resumo.masculino) + Number(resumo.feminino) + Number(resumo.naoInformado);
+  // return {
+  //   [resumo.id + ' Masculino']: resumo.masculino,
+  //   [resumo.id + ' Feminino']: resumo.feminino,
+  //   [resumo.id + ' Não Informado']: resumo.naoInformado,
+  // }
 }
 
 export const parseFaixaEtaria = (localReports, type: string) => localReports.reduce((reports, report) => {
   const month = monthsObj[Number(report.periodo.inicio.split('/')[1])];
-  const reducedType = report[type].map((resumo) => {
-    return parseFaixaBySex(resumo);
-  })
+  const reducedType = report[type].reduce((acc, resumo) => {
+    return acc + parseFaixaBySex(resumo);
+  }, 0)
   return {
     ...reports,
     [month]: {
-      data: reducedType,
+      Total: reducedType,
       month
     }
   }}, {});
+
+  export const summaryTemplate: SummaryData = {
+    resumoProducao: {
+      data: {},
+      keys: ['Registros identificados', 'Registros não identificados'],
+      legend: 'Resumo de Produção'
+    },
+    dadosGerais: {
+      data: {},
+      keys: ['Gestante', 'Paciente com necessidades especiais'],
+      legend: 'Dados Gerais'
+    },
+    turno: {
+      data: {},
+      keys: ['Manhã', 'Tarde', 'Noite', 'Não informado'],
+      legend: 'Turno'
+    },
+    faixaEtaria: {
+      data: {},
+      keys: ['Total'],
+      legend: 'Faixa Etaria',
+    },
+    sexo: {
+      data: {},
+      keys: ["Masculino", "Feminino", "Não informado"],
+      legend: 'Sexo',
+    },
+    tiposDeAtendimento: {
+      data: {},
+      keys: ["Consulta agendada", "Escuta inicial  Orientação", "Consulta no dia", "Atendimento de urgncia", "Não informado"],
+      legend: 'Tipo de Atendimento',
+    },
+    tipoDeConsulta: {
+      data: {},
+      keys: ["Primeira consulta odontolgica programática",
+        "Consulta de retorno em odontologia", "Consulta de manutenção em odontologia", "Não informado"],
+      legend: 'Tipo de Consulta',
+    },
+    vigilanciaEmSaudeBucal: {
+      data: {},
+      keys: ["Abscesso dentoalveolar", "Alteração em tecidos moles",
+        "Dor de dente",
+        "Fendas ou fissuras labiopalatais", "Fluorose dentária moderada ou severa"
+        , "Traumatismo dentoalveolar", "Não identificado", "Não informado"],
+      legend: 'Vigilancia em Saude Bucal',
+    },
+    procedimentos: {
+      data: {},
+      keys: [],
+      legend: 'Procedimentos',
+    },
+    fornecimento: {
+      data: {},
+      keys: ['Creme dental', 'Escova dental', 'Fio dental', 'Não informado'],
+      legend: 'Fornecimento',
+    },
+    condutaDesfecho: {
+      data: {},
+      keys: ["Retorno para consulta agendada", "Agendamento para outros profissionais AB",
+        "Agendamento para NASF", "Agendamento para grupos", "Alta do episdio", "Não informado", "Tratamento concluído"],
+      legend: 'Conduta/Desfecho'
+    },
+    encaminhamento: {
+      data: {},
+      keys: [],
+      legend: 'Encaminhamento'
+    }
+  }

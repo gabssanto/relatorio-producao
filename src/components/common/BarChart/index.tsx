@@ -9,7 +9,7 @@ interface Props {
 
 const BarChart: React.FC<Props> = ({ data, keys, legend }) => {
   return (
-    <div style={{ height: 400 }}>
+    <div style={{ height: 400, maxWidth: '100vw' }}>
         <ResponsiveBar
           data={data}
           keys={keys}

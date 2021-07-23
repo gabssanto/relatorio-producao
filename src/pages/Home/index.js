@@ -66,20 +66,7 @@ const Home = () => {
 
           }
         })
-        /* var resumoProducao = [];
-        var dadosGerais = [];
-        var turno = [];
-        var faixaEtaria = {};
-        var sexo = {};
-        var localDeAtendimento = {};
-        var tiposDeAtendimento = {};
-        var vigilanciaEmSaudeBucal = {};
-        var procedimentos = {};
-        var fornecimento = {};
-        var condutaDesfecho = {};
-        var encaminhamento = {};
-        var json = {}; */
-
+        //TODO: this code is horrible, refactor it someday, I know it's ugly
         var json = {
           local: array[0].join(),
           uf: array[0][0],
