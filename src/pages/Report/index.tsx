@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ResponsiveWaffle } from '@nivo/waffle';
 import { ResponsiveBar } from '@nivo/bar';
 import { Container, Title, HeaderContainer } from './styles';
 import { useParams } from 'react-router-dom';
@@ -7,13 +6,13 @@ import PieChart from './PieChart';
 import HeaderComponent from '../../components/common/Header';
 
 const Report = () => {
-  const { fileName } = useParams();
-  const [file, setFile] = useState();
+  const { fileName } = useParams<any>();
+  const [file, setFile] = useState<any>();
   const printRef = useRef(null);
 
   function getFile() {
-    const decodedUri = decodeURIComponent(fileName);
-    const files = JSON.parse(localStorage.getItem('relatorios'));
+    const decodedUri: any = decodeURIComponent(fileName);
+    const files = JSON.parse(localStorage.getItem('relatorios') || '[]');
     const uriParser = decodedUri.replaceAll('-', '/').split(' a ');
     setFile(files.filter(file => file.periodo.inicio === uriParser[0] && file.periodo.fim === uriParser[1])[0])
   }
@@ -23,12 +22,6 @@ const Report = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* const handlePrint = (e) => {
-    e.preventDefault();
-    // is getElementById an anti pattern even if I'm not modyfying the DOM?
-    const node = document.getElementById("printableReport");
-    window.open(node, "PRINT", "height=400,width=600");
-  } */
   return (
     <Container ref={printRef}>
       <HeaderComponent printRef={printRef} />
@@ -104,8 +97,8 @@ const Report = () => {
             />
           </div>
           <PieChart title="Sexo" data={file.sexo} />
-
-          <Title>Local de Atendimento</Title>
+          // TODO: seems like this is not necessary
+          {/* <Title>Local de Atendimento</Title>
           <div style={{ height: 300 }}>
             <ResponsiveWaffle
               data={file.localDeAtendimento}
@@ -144,7 +137,7 @@ const Report = () => {
                 }
               ]}
             />
-          </div>
+          </div> */}
           <PieChart title="Tipo de Atendimento" data={file.tiposDeAtendimento} />
           <PieChart title="Tipo de Consulta" data={file.tipoDeConsulta} />
           <PieChart title="Vigilância em saúde bucal" data={file.vigilanciaEmSaudeBucal} />
