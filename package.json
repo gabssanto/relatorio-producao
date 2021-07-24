@@ -4,6 +4,9 @@
   "homepage": "./",
   "main": "./electron/main.ts",
   "private": true,
+  "engines": {
+    "node": "14.16.1"
+  },
   "dependencies": {
     "@nivo/bar": "^0.62.0",
     "@nivo/pie": "^0.62.0",
