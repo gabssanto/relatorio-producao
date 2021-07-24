@@ -26,7 +26,7 @@ const Report = () => {
     <Container ref={printRef}>
       <HeaderComponent printRef={printRef} />
       {!!file && (
-        <>
+        <div>
           <HeaderContainer>
             <h1>UBS: {file.ubs}</h1>
             <h2>Local: {`${file.uf}, ${file.municipio}`}</h2>
@@ -145,7 +145,7 @@ const Report = () => {
           <PieChart title="Fornecimento" data={file.fornecimento} />
           <PieChart title="Conduta / Desfecho" data={file.condutaDesfecho} />
           <PieChart title="Encaminhamento" data={file.encaminhamento} />
-        </>
+        </div>
       )}
 
     </Container>
