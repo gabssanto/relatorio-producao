@@ -4,6 +4,10 @@ Esse projeto esta hospedado [aqui](https://relatorios-esus.netlify.app/) e visa 
 
 ## Como usar
 
+1. Na página inicial, você irá reparar com a seguinte tela:
+![Screen Shot 2021-07-23 at 21 56 54](https://user-images.githubusercontent.com/16672623/126853007-0c9cef12-13f3-4020-af8a-df31e2ad98d8.png)
+
+
 ## Como Contribuir
 
 Caso tenha interesse em contribuir para o projeto é bem simples 😆
