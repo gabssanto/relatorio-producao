@@ -4,7 +4,7 @@ import { uniqueId, uniqBy } from 'lodash';
 import filesize from 'filesize';
 import UploadButton from '../../components/UploadButton';
 import FileList from '../../components/FileList'
-import { Container, Report, Title, ReportWrapper } from './styles';
+import { Container, Report, Title, ReportWrapper, TitleContainer, ContributeContent } from './styles';
 import { BsTrashFill } from 'react-icons/bs'
 
 const regex = /[^a-zA-Z' ''ã''á''à''í''ú''ç']+/g;
@@ -292,7 +292,12 @@ const Home = () => {
 
   return (
     <Container>
-      <Title>Adicionar novo Relatório</Title>
+      <TitleContainer>
+        <Title>Adicionar novo Relatório</Title>
+        <ContributeContent href="https://github.com/gabssanto/relatorio-producao">
+            Contribua para o Projeto
+        </ContributeContent>
+      </TitleContainer>
       <UploadButton onUpload={handleUpload} />
       {!!uploadedFiles.length && (
         <FileList files={uploadedFiles} />

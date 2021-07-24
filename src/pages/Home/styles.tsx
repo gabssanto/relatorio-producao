@@ -16,6 +16,33 @@ export const Title = styled.div`
   margin: 20px 0;
 `;
 
+export const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ContributeContent = styled.a`
+  cursor: pointer;
+  margin: 10px 0;
+  margin-right: 16px;
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: 0.25s;
+  &:hover {
+    background-color: #4192D4;
+    color: #fff;
+    transition: 0.25s;
+  }
+`;
+
 export const Report = styled.a`
   cursor: pointer;
   margin: 10px 0;
