@@ -5,8 +5,11 @@ Esse projeto esta hospedado [aqui](https://relatorios-esus.netlify.app/) e visa 
 ## Como usar
 
 1. Na página inicial, você irá reparar com a seguinte tela:
-![Screen Shot 2021-07-23 at 21 56 54](https://user-images.githubusercontent.com/16672623/126853007-0c9cef12-13f3-4020-af8a-df31e2ad98d8.png)
-
+   ![Screen Shot 2021-07-23 at 21 56 54](https://user-images.githubusercontent.com/16672623/126853007-0c9cef12-13f3-4020-af8a-df31e2ad98d8.png)
+2. Clicando na área pontilhada e possível adicionar documentos
+3. Clicar no relatorio por mes permite visualizar por mes
+4. Clicar para obter o relatorio geral permite ver o relatorio de todos os enviados para o site
+5. A qualquer momento no relatorio mensal ou anual e possivel salvar como PDF clicando no canto superior direito 🖨
 
 ## Como Contribuir
 
