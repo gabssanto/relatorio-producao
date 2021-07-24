@@ -5,7 +5,7 @@
   "main": "./electron/main.ts",
   "private": true,
   "engines": {
-    "node": "14.16.1"
+    "node": ">=14"
   },
   "dependencies": {
     "@nivo/bar": "^0.62.0",
